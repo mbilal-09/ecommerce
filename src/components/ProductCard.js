@@ -4,7 +4,6 @@ import { useState } from 'react';
 const { Meta } = Card;
 
 export default function ProductCard({ products }) {
-    console.log('products-->', products)
     return (
         <div className='flex'>
             {products?.map((data, index) => {
@@ -32,7 +31,7 @@ export default function ProductCard({ products }) {
                             title={data.title}
                             description={data.category}
                         />
-                        <p>Price {data.price}</p>
+                        <p className='mt-4'>Price: {data.price}</p>
                         <p className='text-gray-400'>{data.desc}</p>
                     </Card>
                 )
