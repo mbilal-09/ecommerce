@@ -79,7 +79,7 @@ export default function CardForm() {
   return (
     <div className="flex w-full">
       <div className="w-1/4">
-        <div className="p-6 pt-10 w-full border-r-[1px] h-screen border-green-600">
+        <div className="p-6 pt-10 w-full">
           <span className="text-green-600 font-semibold text-2xl">Filter</span>
           <div>
             <p className="font-semibold text-xl mt-4">Price</p>
@@ -119,7 +119,7 @@ export default function CardForm() {
         </div>
       </div>
 
-      <div className="w-3/4">
+      <div className="w-3/4 border-l-[1px] border-green-600">
         <Form
           className="mt-6"
           name="control-hooks"

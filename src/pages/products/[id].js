@@ -1,12 +1,40 @@
 import { useRouter } from 'next/router'
+import { Context } from "@/context/context";
+import { useContext } from "react";
 
 export default function cardDetails() {
-    const route = useRouter()
-    console.log(route);
+    const route = useRouter();
+    const productId = route?.query?.id
+    const data = useContext(Context);
+    const cardData = data.cardData;
+    const selected = cardData.find((item) => item.id == productId)
+    const { title, description, image, id, category, rating } = selected
     
     return(
-        <>
-        <h1>hello</h1>
-        </>
+        <main
+            className={`flex min-h-screen flex-col p-2 md:p-3 lg:p-5 justify-center bg-gray-100`}
+        >
+
+            <h1 className='text-center my-3 font-bold text-3xl'>ABC Store</h1>
+            <div className='flex flex-col md:flex-row sm:mx-2 md-mx-5 lg:mx-10 bg-white p-2 lg:p-4 rounded-md'>
+
+                <div className='w-full flex justify-center md:w-6/12'>
+                    <img src={image}
+                        width={280}
+                        height={300}
+                    />
+                </div>
+                <div className='w-full md:w-6/12 flex flex-col '>
+                    <h1 className='font-bold mt-10'>{title}</h1>
+                    <p className='font-regular mt-4 text-[14px]'>{description}</p>
+                    <p className='font-semibold mt-4 text-[14px]'>Catogory : {category}</p>
+                    <p className='font-medium mt-4 text-[14px]'>Rating : {rating.rate} {`(${rating.count})`} </p>
+                    <button className='p-2 w-full bg-black text-white rounded-md my-3'>Add To Cart</button>
+                </div>
+
+            </div>
+
+
+        </main>
     )
 }
