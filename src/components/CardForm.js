@@ -1,24 +1,37 @@
 import { Button, Form, Input, Radio, Space } from "antd";
-import { useState } from "react";
-import ProductCard from "./ProductCard";
+import { useContext, useEffect, useState } from "react";
+import ProductCard from "../pages/products";
+import { Context } from "@/context/context";
 
 export default function CardForm() {
-  const [cardData, setCardData] = useState([]);
   const [productData, setproductData] = useState([]);
   const [form] = Form.useForm();
   let [categories, setcategories] = useState([]);
-  
-  const onFinish = (values) => {
-    cardData.push(values);
-    setCardData([...cardData]);
+  const data = useContext(Context);
+  const cardData = data.cardData;
+  const setCardData = data.setCardData;
+
+  useEffect(() => {
     setproductData([...cardData]);
-    form.resetFields();
+  }, [])
+
+  useEffect(() => {
     cardData.forEach((product) => {
       if (!categories.includes(product.category)) {
         categories.push(product.category);
         setcategories([...categories])
       }
     });
+  }, [cardData])
+
+  
+  
+  const onFinish = (values) => {
+    values.id = cardData.length + 1;
+    cardData.unshift(values);
+    setCardData([...cardData]);
+    setproductData([...cardData]);
+    form.resetFields();
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -28,6 +41,7 @@ export default function CardForm() {
   const fiterByPrice = (e) => {
     setpriceValue(e.target.value);
     let filtered = cardData.filter((data) => data.price > e.target.value);
+    console.log(filtered);
     setproductData([...filtered]);
   };
 
@@ -143,7 +157,7 @@ export default function CardForm() {
 
           <Form.Item
             label="Image"
-            name="imageUrl"
+            name="image"
             className="m-4"
             rules={[
               {
@@ -185,7 +199,7 @@ export default function CardForm() {
 
           <Form.Item
             label="Description"
-            name="desc"
+            name="description"
             className="m-4"
             rules={[
               {
